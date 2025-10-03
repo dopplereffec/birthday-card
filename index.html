@@ -10,12 +10,21 @@
     text-align: center;
     background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
     padding: 50px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Анимация заголовка */
+  @keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
   }
 
   h1 {
     color: #fff;
     font-size: 48px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    animation: jump 1s ease-in-out infinite;
   }
 
   .card {
@@ -26,13 +35,22 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     margin-top: 30px;
     max-width: 400px;
+    position: relative;
   }
 
+  /* Мерцающая рамка вокруг картинки */
   #cardImage {
     width: 100%;
     height: auto;
     border-radius: 15px;
     margin-bottom: 20px;
+    border: 5px solid #ff4d6d;
+    animation: glow 1.5s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 10px #ff4d6d; }
+    to { box-shadow: 0 0 30px #ff99aa; }
   }
 
   p {
@@ -44,6 +62,22 @@
     margin-top: 30px;
     font-size: 16px;
     color: #fff;
+  }
+
+  /* Конфетти */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #ff4d6d;
+    top: -10px;
+    animation: fall 3s linear infinite;
+    border-radius: 50%;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
@@ -60,8 +94,23 @@
   С любовью, Илья (йоу)
 </div>
 
+<script>
+  // Генерация конфетти
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.width = confetti.style.height = (5 + Math.random() * 10) + 'px';
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 3000);
+  }
+
+  setInterval(createConfetti, 200); // каждые 0.2 сек падают новые конфетти
+</script>
+
 </body>
 </html>
-
 
 

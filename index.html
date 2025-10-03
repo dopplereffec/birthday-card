@@ -14,19 +14,27 @@
     position: relative;
   }
 
-  /* Анимация заголовка */
+  /* Мигающий заголовок */
+  @keyframes rainbow {
+    0% { color: #ff4d6d; }
+    25% { color: #ffcc00; }
+    50% { color: #33ccff; }
+    75% { color: #ff66ff; }
+    100% { color: #ff4d6d; }
+  }
+
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
   }
 
   h1 {
-    color: #fff;
     font-size: 48px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    animation: jump 1s ease-in-out infinite;
+    animation: jump 1s ease-in-out infinite, rainbow 2s linear infinite;
   }
 
+  /* Плавное появление карточки */
   .card {
     display: inline-block;
     background: #fff;
@@ -36,9 +44,17 @@
     margin-top: 30px;
     max-width: 400px;
     position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
   }
 
-  /* Мерцающая рамка вокруг картинки */
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Мерцающая рамка */
   #cardImage {
     width: 100%;
     height: auto;
@@ -53,26 +69,18 @@
     to { box-shadow: 0 0 30px #ff99aa; }
   }
 
-  p {
-    font-size: 20px;
-    color: #333;
-  }
+  p { font-size: 20px; color: #333; }
 
-  .footer {
-    margin-top: 30px;
-    font-size: 16px;
-    color: #fff;
-  }
+  .footer { margin-top: 30px; font-size: 16px; color: #fff; }
 
   /* Конфетти */
   .confetti {
     position: absolute;
+    top: -10px;
     width: 10px;
     height: 10px;
-    background-color: #ff4d6d;
-    top: -10px;
-    animation: fall 3s linear infinite;
     border-radius: 50%;
+    animation: fall 3s linear infinite;
   }
 
   @keyframes fall {
@@ -104,9 +112,7 @@
   <p>Желаю тебе море сваги, +вайба, и ржаки! 💖</p>
 </div>
 
-<div class="footer">
-  С любовью, Илья (йоу)
-</div>
+<div class="footer">С любовью, Илья (йоу)</div>
 
 <!-- Музыка -->
 <audio id="birthdaySong" loop>
@@ -120,23 +126,23 @@
 </div>
 
 <script>
-  // Генерация конфетти
+  // Генерация конфетти разных форм и цветов
   function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
     confetti.style.left = Math.random() * window.innerWidth + 'px';
+    const shape = Math.random() < 0.5 ? '50%' : '0'; // круг или квадрат
+    confetti.style.borderRadius = shape;
     confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
     confetti.style.width = confetti.style.height = (5 + Math.random() * 10) + 'px';
     document.body.appendChild(confetti);
-
     setTimeout(() => confetti.remove(), 3000);
   }
 
-  setInterval(createConfetti, 200); // каждые 0.2 сек падают новые конфетти
+  setInterval(createConfetti, 150);
 </script>
 
 </body>
 </html>
-
 
 

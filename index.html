@@ -16,11 +16,11 @@
 
   /* Мигающий заголовок */
   @keyframes rainbow {
-    0% { color: #ff4d6d; }
-    0% { color: #ffcc00; }
-    0% { color: #33ccff; }
-    0% { color: #ff66ff; }
-    0% { color: #ff4d6d; }
+    25% { color: #ff4d6d; }
+    25% { color: #ffcc00; }
+    25% { color: #33ccff; }
+    25% { color: #ff66ff; }
+    25% { color: #ff4d6d; }
   }
 
   @keyframes jump {
@@ -116,9 +116,10 @@
 
 <!-- Музыка -->
 <audio id="birthdaySong" loop>
-  <source src="https://rr2---sn-5hnekn7l.googlevideo.com/videoplayback?expire=1759555247&ei=T1rgaOzQNtis9cYP_e22IA&ip=181.117.198.29&id=o-AJSD5D9AyBqKMGp4fJ5K1azJ1YvVBUEJYzPIHz8-oRJU&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&bui=ATw7iSX9NQktdYuIJQOnQHpRR-LYj1pjI7DJYFN5M-NvFHZh5cbccGAEoxjwujGwYEvqYLK2DrBrhbI4&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=wQaLDOHo6FoTnsTkG_5QqDkQ&rqh=1&gir=yes&clen=245049&dur=15.069&lmt=1749247936199201&keepalive=yes&lmw=1&fexp=24350737,24350827,24351316,24351318,24351528,24352001,24352157,24352274,24352278,24352916,24352918,24352960,24352981,24352983,24353009,24353011,24353151,24353227,24353229,24353287,24353289,24353697,24353699,24353795,24353797,51557447,51565116,51565682,51580970&c=TVHTML5&sefc=1&txp=5432534&n=gNBV0o1i7qNrAg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cdur%2Clmt&sig=AJfQdSswRAIgHoVzMKsFMkiASLGeKXRbZYS6GF4XaN9OYahF48fD2Q8CIG9e6DbRoRWdrkFSK8wo3RQBLmEuicjCD8wtL_eAfUfx&rm=sn-ja5gv5g-na5e7e,sn-x1xly7e&rrc=79,104,191&req_id=1445e5cd5d8ca3ee&rms=rdu,au&ipbypass=yes&redirect_counter=3&cm2rm=sn-ixhs7z&cms_redirect=yes&cmsv=e&met=1759535090,&mh=iB&mip=5.181.202.30&mm=34&mn=sn-5hnekn7l&ms=ltu&mt=1759534866&mv=m&mvi=2&pl=24&lsparams=ipbypass,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRQIgJVs0eAUtsZCMC_vIoDzL0Jmxf8F0gBvppYmqnDu9nvMCIQDgQgHTT0Q1BDjMqPqOu5c-_vhwR4tA-AdGKfBrl7FfjQ%3D%3D" type="audio/mpeg">
+  <source src="videoplayback.mp3" type="audio/mpeg">
   Ваш браузер не поддерживает аудио.
 </audio>
+
 
 <div>
   <button class="music-btn" onclick="document.getElementById('birthdaySong').play()">Включить музыку 🎵</button>
@@ -144,6 +145,7 @@
 
 </body>
 </html>
+
 
 
 

@@ -14,14 +14,7 @@
     position: relative;
   }
 
-  /* Мигающий заголовок */
-  @keyframes rainbow {
-    25% { color: #ff4d6d; }
-    25% { color: #ffcc00; }
-    25% { color: #33ccff; }
-    25% { color: #ff66ff; }
-    25% { color: #ff4d6d; }
-  }
+
 
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
@@ -54,8 +47,8 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Мерцающая рамка */
-  #cardImage {
+  /* Мерцающая рамка вокруг видео */
+  #cardVideo {
     width: 100%;
     height: auto;
     border-radius: 15px;
@@ -79,7 +72,6 @@
     top: -10px;
     width: 10px;
     height: 10px;
-    border-radius: 50%;
     animation: fall 3s linear infinite;
   }
 
@@ -101,6 +93,31 @@
   }
 
   .music-btn:hover { background: #ff2a4d; }
+
+  /* Overlay для мобильных */
+  #overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #000000aa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    flex-direction: column;
+  }
+
+  #overlay button {
+    padding: 20px;
+    font-size: 24px;
+    border:none;
+    border-radius:10px;
+    background:#ff4d6d;
+    color:white;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -108,7 +125,10 @@
 <h1>С днём рождения, Полиша!! 🎉</h1>
 
 <div class="card">
-  <img id="cardImage" src="https://poknok.art/uploads/posts/2022-12/1671212065_11-poknok-art-p-doman-zhivotnoe-11.jpg" alt="Поздравление">
+  <video id="cardVideo" autoplay loop muted playsinline>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
   <p>Желаю тебе море сваги, +вайба, и ржаки! 💖</p>
 </div>
 
@@ -119,17 +139,34 @@
   <source src="videoplayback.mp3" type="audio/mpeg">
 </audio>
 
-<button onclick="document.getElementById('birthdaySong').play()">
-  Включить музыку 🎵
-</button>
+<!-- Overlay для мобильных -->
+<div id="overlay">
+  <p style="color:white; font-size:24px; margin-bottom:20px;">Нажми, чтобы включить музыку и открыть открытку 🎵</p>
+  <button id="startBtn">Включить 🎶</button>
+</div>
 
-
+<!-- Дополнительно кнопки для управления музыкой -->
 <div>
   <button class="music-btn" onclick="document.getElementById('birthdaySong').play()">Включить музыку 🎵</button>
   <button class="music-btn" onclick="document.getElementById('birthdaySong').pause()">Остановить музыку ⏹</button>
 </div>
 
 <script>
+  const audio = document.getElementById('birthdaySong');
+  const overlayBtn = document.getElementById('startBtn');
+  const overlay = document.getElementById('overlay');
+
+  // Кнопка для включения музыки
+  overlayBtn.addEventListener('click', () => {
+    audio.play().catch(()=>{});
+    overlay.style.display = 'none';
+  });
+
+  // Дополнительно: первый тап по экрану запускает аудио (для iPhone)
+  document.body.addEventListener('touchstart', () => {
+    audio.play().catch(()=>{});
+  }, { once: true });
+
   // Генерация конфетти разных форм и цветов
   function createConfetti() {
     const confetti = document.createElement('div');
@@ -148,9 +185,6 @@
 
 </body>
 </html>
-
-
-
 
 
 

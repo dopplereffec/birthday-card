@@ -25,7 +25,7 @@
     animation: jump 1s ease-in-out infinite, rainbow 2s linear infinite;
   }
 
-  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+  /* Плавное появление карточки */
   .card {
     display: inline-block;
     background: #fff;
@@ -34,12 +34,16 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     margin-top: 30px;
     max-width: 400px;
+    position: relative;
     opacity: 0;
     transform: translateY(50px);
     animation: fadeIn 1s forwards;
     animation-delay: 0.5s;
   }
 
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* Мерцающая рамка вокруг видео */
   #cardVideo {
     width: 100%;
     height: auto;
@@ -54,9 +58,48 @@
   p { font-size: 20px; color: #333; }
   .footer { margin-top: 30px; font-size: 16px; color: #fff; }
 
+  /* Конфетти */
   .confetti { position: absolute; top: -10px; width: 10px; height: 10px; animation: fall 3s linear infinite; }
-  @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity:1; } 100% { transform: translateY(100vh) rotate(360deg); opacity:0; } }
+  @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
+  /* Кнопки музыки */
+  .music-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+  }
+
+  .music-btn:hover { background: #ff2a4d; }
+
+  /* Overlay для мобильных */
+  #overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #000000aa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    flex-direction: column;
+  }
+
+  #overlay button {
+    padding: 20px;
+    font-size: 24px;
+    border:none;
+    border-radius:10px;
+    background:#ff4d6d;
+    color:white;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -73,37 +116,62 @@
 
 <div class="footer">С любовью, Илья (йоу)</div>
 
+<!-- Музыка -->
 <audio id="birthdaySong" loop>
   <source src="videoplayback.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Overlay для мобильных -->
+<div id="overlay">
+  <p style="color:white; font-size:24px; margin-bottom:20px;">Нажми, чтобы включить музыку и открыть открытку 🎵</p>
+  <button id="startBtn">Включить 🎶</button>
+</div>
+
+<!-- Дополнительно кнопки для управления музыкой -->
+<div>
+  <button class="music-btn" onclick="document.getElementById('birthdaySong').play()">Включить музыку 🎵</button>
+  <button class="music-btn" onclick="document.getElementById('birthdaySong').pause()">Остановить музыку ⏹</button>
+</div>
+
 <script>
   const audio = document.getElementById('birthdaySong');
+  const overlayBtn = document.getElementById('startBtn');
+  const overlay = document.getElementById('overlay');
 
-  // Попытка включить музыку (работает только после действия пользователя на iPhone)
-  window.addEventListener('click', () => { audio.play().catch(()=>{}); }, { once: true });
+  // Кнопка для включения музыки
+  overlayBtn.addEventListener('click', () => {
+    audio.play().catch(()=>{});
+    overlay.style.display = 'none';
+  });
 
-  // Вибрация сразу при загрузке (Android поддерживает)
-  if (navigator.vibrate) {
-    navigator.vibrate([200, 100, 200, 100, 300]);
-  }
+  // Дополнительно: первый тап по экрану запускает аудио (для iPhone)
+  document.body.addEventListener('touchstart', () => {
+    audio.play().catch(()=>{});
+  }, { once: true });
 
-  // Генерация конфетти
+  // Генерация конфетти разных форм и цветов
   function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
     confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.borderRadius = Math.random() < 0.5 ? '50%' : '0';
-    confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
-    confetti.style.width = confetti.style.height = (5 + Math.random()*10) + 'px';
+    const shape = Math.random() < 0.5 ? '50%' : '0'; // круг или квадрат
+    confetti.style.borderRadius = shape;
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.width = confetti.style.height = (5 + Math.random() * 10) + 'px';
     document.body.appendChild(confetti);
     setTimeout(() => confetti.remove(), 3000);
   }
   setInterval(createConfetti, 150);
+
+  // Вибрация при заходе на сайт (Android)
+  if (navigator.vibrate) {
+    navigator.vibrate([200, 100, 200]);
+  }
 </script>
 
 </body>
 </html>
+
 
 
 
